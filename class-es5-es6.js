@@ -6,9 +6,20 @@ class Person {
     this.name = name;
     this.age = age;
   }
+
+  // private var
+  #privateMsg = "default message";
+
+  // getter and setter
+  get msg() { return this.#privateMsg; }
+  set msg(message) { this.#privateMsg = `UPDATED MESSAGE: ${message}`; }
+
+  // instance method
   sayName() {
     return `Hello, my name is ${this.name}`;
   }
+
+  // static method
   static testStaticMethod() {
     return `Static Method`;
   }
@@ -20,6 +31,8 @@ class FireMan extends Person {
     super(name, age);
     this.rank = rank;
   }
+
+  // assigned as default from constructor?
   get rank() {
     return this._rank;
   }
@@ -28,6 +41,10 @@ class FireMan extends Person {
   }
 }
 
+const es6FireBoy = new FireMan("Chris", 21, "not good");
+es6FireBoy.rank = "better"
+console.log(es6FireBoy)
+
 
 /* ES5 Classes */
 
@@ -35,9 +52,6 @@ class FireMan extends Person {
 function PersonES5(name, age) {
   this.name = name;
   this.age = age;
-  this._privateProperty
-
-  // what about using getter/setter to sanitize constructor data?
 }
 
 // instance method
@@ -50,10 +64,11 @@ PersonES5.testStaticMethod = function () {
   return `Static Method`;
 }
 
-// create getter and setter on prototype
+// create getter and setter on prototype.
+// NOTE: I didn't use ES6 shorthand method syntax
 Object.defineProperty(PersonES5.prototype, "specialAge", {
-  get() { return this._age; },
-  set(age) { this._age = age + 1; },
+  get: function() { return this._age; },
+  set: function(age) { this._age = age + 1; },
   enumerable: true,
   configurable: true
 });
